@@ -216,6 +216,13 @@
       .slide { animation: none; }
       .slide-1 { opacity: 1; }
     }
+    
+    .visitor-counter {
+    margin-top: 10px;
+    font-size: 12px;
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+}
   </style>
 </head>
 <body>
@@ -253,6 +260,11 @@
         Press play on Spotify to start the music.
       </p>
       <div class="coming">☕ Thanks for stopping by 🍪</div>
+
+      <div class="visitor-counter">
+  <span id="visitor-count">...</span> people visited so far.
+</div>
+      
     </section>
 
     <footer class="footer">
@@ -260,5 +272,17 @@
       <span>2026</span>
     </footer>
   </main>
+  <script>
+fetch('https://api.counterapi.dev/v1/citrus-coffee/visits/up')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('visitor-count').textContent =
+      Number(data.count).toLocaleString();
+  })
+  .catch(error => {
+    console.error('Visitor counter error:', error);
+    document.querySelector('.visitor-counter').style.display = 'none';
+  });
+</script>
 </body>
 </html>
